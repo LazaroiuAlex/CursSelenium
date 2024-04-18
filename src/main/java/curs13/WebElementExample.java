@@ -16,7 +16,7 @@ public class WebElementExample {
 		
 		browser = new ChromeDriver();
 		browser.get("https://keybooks.ro/");
-		browser.manage().window().maximize();
+		browser.manage().window().maximize(); //maximizeaza window-ul 
 		
 	}
 	@Test
