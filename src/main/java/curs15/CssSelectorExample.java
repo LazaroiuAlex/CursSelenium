@@ -1,5 +1,7 @@
 package curs15;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -54,7 +56,7 @@ public class CssSelectorExample extends BaseTest {
 		passwordField.sendKeys("Parola");
 	}
 	
-	@Test
+	//@Test
 	public void cssExample3() {
 		
 		//* --> contains (it's a wildcard)
@@ -79,6 +81,50 @@ public class CssSelectorExample extends BaseTest {
 		
 		WebElement book4 = driver.findElement(By.cssSelector("a[href$='story']"));
 		System.out.println(book4.getText());
+	}
+	
+	@Test
+	public void cssExample4() throws InterruptedException {
+		JavascriptExecutor jse = (JavascriptExecutor) driver;
+		
+		//parent + child css --> semnul > este pentru direct child, daca punem " " (spatiu) se poate duce si pe nepot
+		
+		//"ul[role='tablist']>li"
+		List<WebElement> menuEntries = driver.findElements(By.cssSelector("ul[role='tablist']>li"));
+		jse.executeScript("arguments[0].setAttribute('style', 'border:4px solid green;')", menuEntries.get(3));
+		
+		//"ul[role='tablist']>li[aria-selected='True']"
+		
+		WebElement selectMenuEntry = driver.findElement(By.cssSelector("ul[role='tablist']>li[aria-selected='true']"));
+		jse.executeScript("arguments[0].setAttribute('style', 'border:4px solid blue;')", selectMenuEntry);
+		
+		//"ul[role='tablist']>li:not([aria-selected='true'])" --> :not este negatie, cauta toate elementele care nu au true
+		List<WebElement> notSelectedMenuEntries = driver.findElements(By.cssSelector("ul[role='tablist']>li:not([aria-selected='true'])"));
+		
+		for(WebElement element : notSelectedMenuEntries) {
+			
+			Thread.sleep(3000);
+			jse.executeScript("arguments[0].setAttribute('style', 'border:4px solid orange;')", element);
+			
+		}
+		
+		// ul[role='tablist']>li[role='tab']>a[href*=#sc_tab]
+		// ul -->parinte al lui li
+		// li --> este copil al lui ul si parinte al lui a
+		// a  --> este copil al lui li si nepot al lui ul
+		// ca sa cobor de la ul direct la a (sarim peste li), nu mai fac referinte cu > ()direct child ci pun doar spatiu
+		// ul[role='tablist'] a[href*=#sc_tab]
+		
+		
+		List<WebElement> menuLinks = driver.findElements(By.cssSelector("ul[role='tablist'] a[href*='#sc_tab']"));
+		
+		for(WebElement element : menuLinks) {
+			
+			Thread.sleep(3000);
+			jse.executeScript("arguments[0].setAttribute('style', 'border:4px solid pink;')", element);
+			
+		}
+		
 	}
 
 }
