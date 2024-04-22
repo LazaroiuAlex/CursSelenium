@@ -114,8 +114,5 @@ public class SeleniumLocatorsExample extends BaseTest {
 	}
 	
 	
-	
-	
-	
-	
+		
 }
