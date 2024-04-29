@@ -17,7 +17,7 @@ public class ImplicitWaitExample extends BaseTest {
 		
 		driver.get("https://the-internet.herokuapp.com/dynamic_loading/2");
 		
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10)); //must not be added in method, should always be added in BaseTest in seleniumutils
 		
 		driver.findElement(By.cssSelector("div[id='start']>button")).click();
 		
